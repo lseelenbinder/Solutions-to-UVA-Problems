@@ -9,7 +9,7 @@
 
 using namespace std;
 
-void threen(long long int n, long long int &count,
+void threen(const long long int n, long long int &count,
         int* solved_table)
 {
     if (n <= LENGTH && solved_table[n] != -1) {
@@ -19,7 +19,7 @@ void threen(long long int n, long long int &count,
         ++count;
         if (n == 1) {
             return;
-        } else if (n%2) {
+        } else if (n % 2) {
             threen(3*n + 1, count, solved_table);
         } else {
             threen(n/2, count, solved_table);
@@ -27,14 +27,14 @@ void threen(long long int n, long long int &count,
     }
 }
 
-void output(long long i, long long j, long long max) {
+void output(const long long i, const long long j, const long long max) {
             cout << i << " " << j << " " << max << endl;
 }
 
 int main() {
 
     int solved_table[LENGTH];
-    for (int x = 0; x <= LENGTH; ++x) { solved_table[x] = -1; }
+    for (int x = 0; x < LENGTH; ++x) { solved_table[x] = -1; }
 
     long long int i, j;
     long long int count, max;
@@ -65,7 +65,6 @@ int main() {
         } else {
             output(i, j, max);
         }
-
     }
     return 0;
 }
