@@ -2,30 +2,55 @@
 #include <stdlib.h>
 #include <string>
 #include <sstream>
+#include <algorithm>
+#include <vector>
 
 using namespace std;
 
-bool jolly(string s) {
-    stringstream ss;
-    ss << s;
-    long long int i, n, k, last;
-    ss >> n;
-    for (i = 0; i < n; ++i) {
-        ss >> k;
-        if (i != 0) {
-            if (!(abs(k - last) == n-i)) {
-                return false;
-            }
-        }
-        last = k;
-    }
-    return true;
-}
 int main() {
     string s;
+    vector<bool> jolly;
+    vector<bool>::iterator it;
+    bool isJolly;
+
+    long long int i, n, k, last;
+    stringstream ss;
+
     while (getline(cin, s)) {
-        cout << ((jolly(s)) ? "Jolly" : "Not jolly") << endl;
+        ss.clear();
+
+        ss << s;
+        ss >> k;
+
+        jolly.resize(k, false);
+        for (it = jolly.begin(); it != jolly.end(); ++it) *it = false;
+
+        jolly[0] = true;
+
+        ss >> n;
+        last = n;
+        while (ss >> n) {
+          i = abs(last - n);
+          if (i < k) {
+            jolly[i] = true;
+          }
+          last = n;
+        }
+
+        it = jolly.begin();
+        while (it != jolly.end()) {
+          if (!*it) {
+            cout << "Not jolly" << endl;
+            break;
+          }
+          ++it;
+        }
+
+        if (it == jolly.end()) {
+          cout << "Jolly" << endl;
+        }
     }
 
     return 0;
 }
+
